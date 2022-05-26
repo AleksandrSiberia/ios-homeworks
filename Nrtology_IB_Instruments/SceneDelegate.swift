@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  Novigation
+//  Nrtology_IB_Instruments
 //
-//  Created by Александр Хмыров on 22.05.2022.
+//  Created by Александр Хмыров on 20.05.2022.
 //
 
 import UIKit
