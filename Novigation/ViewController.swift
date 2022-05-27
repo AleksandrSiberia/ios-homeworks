@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemRed
+        self.navigationItem.title = "Первый экран"
     }
 
 
