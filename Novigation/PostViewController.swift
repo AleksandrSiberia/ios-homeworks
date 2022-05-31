@@ -9,6 +9,7 @@ import UIKit
 
 class PostViewController: UIViewController {
 
+    var post: Post?
 
 
     override func viewDidLoad() {
@@ -17,29 +18,31 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .systemOrange
-        self.navigationItem.title = "Пост"
 
 
-        let rightBottom = UIBarButtonItem(title: "Настройки", style: .plain, target: self, action: #selector(didTapButtom))
+        let rightBotton = UIBarButtonItem(title: "Настройки", style: .plain, target: self, action: #selector(didTapButton))
 
-        self.navigationItem.rightBarButtonItem = rightBottom
+        self.navigationItem.rightBarButtonItem = rightBotton
+
+        if let post1: String = self.post?.title {
+
+            print(post1)
+            self.navigationItem.title = post1
+        }
+
+        else {
+        }
 
     }
 
 
     
-    @objc private func didTapButtom(){
+    @objc private func didTapButton(){
 
         let infoViewController = InfoViewController()
 
-        let post: Post = Post(title: "Мой пост")
-        
-        infoViewController.post = post
 
         let infoUINavigationController = UINavigationController(rootViewController: infoViewController)
-
-
-
 
         present(infoUINavigationController, animated: true)
 

@@ -14,21 +14,16 @@ class FeedViewController: UIViewController {
 
 
 
-    private lazy var buttomPost: UIButton = {
-        let buttom = UIButton()
-        buttom.backgroundColor = .systemBrown
-        buttom.clipsToBounds = true
-        buttom.addTarget(self, action: #selector(didTapButtom), for: .touchUpInside)
-        buttom.frame = CGRect(x: 20, y: 400, width: 200, height: 50)
-        buttom.layer.cornerRadius = buttom.frame.height / 2
+    private lazy var buttonPost: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .systemBrown
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        button.frame = CGRect(x: 20, y: 400, width: 200, height: 50)
+        button.layer.cornerRadius = button.frame.height / 2
+        button.setTitle("Мой пост", for: .normal)
 
-
-
-
-
- //       self.navigationController?.pushViewController(postViewController, animated: true)
-
-        return buttom
+        return button
     }()
 
 
@@ -38,17 +33,23 @@ class FeedViewController: UIViewController {
         self.view.backgroundColor = .systemBlue
         self.navigationItem.title = "Лента"
 
-        self.view.addSubview(self.buttomPost)
+        self.view.addSubview(self.buttonPost)
 
 
     }
 
 
 
-    @objc private func didTapButtom(){
-       let postViewController = PostViewController()
-       self.navigationController?.pushViewController(postViewController, animated: true)
+    @objc private func didTapButton(){
+        let postViewController = PostViewController()
 
+        let post = Post(title: "Мой пост")
+
+        postViewController.post = post
+
+        self.navigationController?.pushViewController(postViewController, animated: true)
+
+        
 
    }
 
