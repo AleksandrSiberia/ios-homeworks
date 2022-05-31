@@ -29,12 +29,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
 
         tabBarController.tabBar.backgroundColor = .white
-        
 
         tabBarController.viewControllers = [navFeedViewController, navProfileViewController]
 
         navFeedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "house"), tag: 1)
-
         navProfileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 2)
 
         // по умолчанию загружается первый viewController добавленный в

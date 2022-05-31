@@ -11,16 +11,11 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.backgroundColor = .systemGray
 
         self.navigationController?.navigationBar.backgroundColor = .systemMint
 
-        
-
-        
-
-        
-        
 
     }
     

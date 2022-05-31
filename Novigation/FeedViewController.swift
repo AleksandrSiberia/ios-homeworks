@@ -12,14 +12,6 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    struct Post {
-        var title: String
-    }
-    var post = Post(title: "Пост")
-
-//
-//    let rightButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: nil, action: nil)
-//    self.navigationItem.rightBarButtonItem = rightButton
 
 
     private lazy var buttomPost: UIButton = {
@@ -29,6 +21,9 @@ class FeedViewController: UIViewController {
         buttom.addTarget(self, action: #selector(didTapButtom), for: .touchUpInside)
         buttom.frame = CGRect(x: 20, y: 400, width: 200, height: 50)
         buttom.layer.cornerRadius = buttom.frame.height / 2
+
+
+
 
 
  //       self.navigationController?.pushViewController(postViewController, animated: true)
@@ -44,6 +39,7 @@ class FeedViewController: UIViewController {
         self.navigationItem.title = "Лента"
 
         self.view.addSubview(self.buttomPost)
+
 
     }
 
