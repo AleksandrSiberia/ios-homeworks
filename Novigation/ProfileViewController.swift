@@ -14,7 +14,7 @@ class ProfileViewController: UIViewController {
         
         self.view.backgroundColor = .systemGray
 
-        self.navigationController?.navigationBar.backgroundColor = .systemMint
+        self.navigationItem.title = "Профиль"
 
 
     }

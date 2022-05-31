@@ -16,7 +16,10 @@ class InfoViewController: UIViewController {
     private lazy var alertButton: UIButton = {
         let button = UIButton()
 
-        button.frame = CGRect(x: 20, y: 150, width: 150, height: 30)
+        let screen = UIScreen.main.bounds.width
+        let screenH = UIScreen.main.bounds.height
+
+        button.frame = CGRect(x: 20, y: screenH / 2, width: screen - 40, height: 30)
         button.backgroundColor = .systemPink
         button.addTarget(self, action: #selector(didTagButton), for: .touchUpInside)
         button.setTitle("Удалить аккаунт", for: .normal)

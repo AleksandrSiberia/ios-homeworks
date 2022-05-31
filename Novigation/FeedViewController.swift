@@ -19,7 +19,12 @@ class FeedViewController: UIViewController {
         button.backgroundColor = .systemBrown
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        button.frame = CGRect(x: 20, y: 400, width: 200, height: 50)
+
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+
+
+        button.frame = CGRect(x: 20, y: screenHeight - 120, width: screenWidth - 40, height: 50)
         button.layer.cornerRadius = button.frame.height / 2
         button.setTitle("Мой пост", for: .normal)
 
@@ -30,6 +35,9 @@ class FeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+
+
         self.view.backgroundColor = .systemBlue
         self.navigationItem.title = "Лента"
 
@@ -37,6 +45,14 @@ class FeedViewController: UIViewController {
 
 
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+    }
+
+
+
 
 
 
@@ -46,6 +62,8 @@ class FeedViewController: UIViewController {
         let post = Post(title: "Мой пост")
 
         postViewController.post = post
+
+
 
         self.navigationController?.pushViewController(postViewController, animated: true)
 
