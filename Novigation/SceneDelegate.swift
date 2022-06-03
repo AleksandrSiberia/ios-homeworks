@@ -11,23 +11,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
-        
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
         self.window = UIWindow.init(windowScene: windowScene)
 
         let navFeedViewController = UINavigationController(rootViewController: FeedViewController())
         let navProfileViewController = UINavigationController(rootViewController: ProfileViewController())
 
-        
-
         let tabBarController = UITabBarController()
-
         tabBarController.tabBar.backgroundColor = .white
-
         tabBarController.viewControllers = [navFeedViewController, navProfileViewController]
 
         navFeedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "house"), tag: 1)
@@ -35,8 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // по умолчанию загружается первый viewController добавленный в
         // массив TabBarController
+        
         self.window?.rootViewController = tabBarController
-
         self.window?.makeKeyAndVisible()
     }
 
