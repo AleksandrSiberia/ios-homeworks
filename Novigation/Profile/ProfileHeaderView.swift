@@ -50,6 +50,13 @@ final class ProfileHeaderView: UIView {
         var statusTextField: UITextField = UITextField()
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         statusTextField.backgroundColor = .white
+        statusTextField.delegate = self
+        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusTextField.textColor = .black
+        statusTextField.layer.borderWidth = 1
+        statusTextField.layer.borderColor = UIColor.black.cgColor
+        statusTextField.layer.cornerRadius = 12
         return statusTextField
     }()
 
@@ -58,9 +65,18 @@ final class ProfileHeaderView: UIView {
         statusButton.backgroundColor = .blue
  //       statusButton.clipsToBounds = true
         statusButton.translatesAutoresizingMaskIntoConstraints = false
-        statusButton.setTitle("Показать статус", for: .normal)
+        statusButton.setTitle("Поменять статус", for: .normal)
         statusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        statusButton.layer.shadowRadius = 4
+        statusButton.layer.shadowColor = UIColor.black.cgColor
+        statusButton.layer.shadowOpacity = 0.7
+        statusButton.layer.cornerRadius = 12
         return statusButton
+    }()
+
+    private lazy var statusText: String = {
+        return ""
     }()
 
     override init(frame: CGRect) {
@@ -75,6 +91,11 @@ final class ProfileHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
+
+    }
+
+    func setFirtResponder() {
+        self.statusTextField.becomeFirstResponder()
     }
 
     private func setupView() {
@@ -84,6 +105,7 @@ final class ProfileHeaderView: UIView {
         self.topStack.addArrangedSubview(self.statusLabel)
         self.addSubview(self.statusTextField)
         self.addSubview(self.statusButton)
+
 
         NSLayoutConstraint.activate([
 
@@ -110,12 +132,25 @@ final class ProfileHeaderView: UIView {
          ])
     }
 
+
+
     @objc private func buttonPressed() {
-        print("status")
+        statusLabel.text = statusText
 
-
+        print(statusText)
     }
 
-
+    @objc private func statusTextChanged(_ TextField: UITextField) {
+        let statusTextField: UITextField = TextField
+        if let text = statusTextField.text  {
+            statusText = text
+        }
+    }
 
 }
+
+extension ProfileHeaderView: UITextFieldDelegate {
+
+}
+
+

@@ -13,7 +13,6 @@ final class ProfileViewController: UIViewController {
         var profileHeaderView = ProfileHeaderView()
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
         profileHeaderView.backgroundColor = .white
-       // profileHeaderView.frame = CGRect(x: 10, y: 10, width: 300, height: 500)
         return profileHeaderView
     }()
 
@@ -22,6 +21,13 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .gray
         self.navigationItem.title = "Профиль"
+        self.navigationController?.navigationBar.backgroundColor = .systemBackground
+
+//        let gesture = UIGestureRecognizer()
+//        gesture.addTarget(self, action: #selector(gestureAction))
+//        self.view.addGestureRecognizer(gesture)
+
+
     }
 
     override func viewWillLayoutSubviews() {
@@ -30,15 +36,22 @@ final class ProfileViewController: UIViewController {
 
         NSLayoutConstraint.activate([
 
-            self.profileHeaderView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+            self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 1),
             self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.profileHeaderView.heightAnchor.constraint(equalToConstant: 500)
+            self.profileHeaderView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -1)
         ])
+    }
 
-
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        profileHeaderView.setFirtResponder()
 
     }
+
+//    @objc private func gestureAction() {
+//        self.view.endEditing(true)
+//
+//    }
     
 }
