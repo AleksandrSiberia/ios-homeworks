@@ -21,7 +21,6 @@ final class ProfileHeaderView: UIView {
 
     private lazy var topStack: UIStackView = {
         var topStack: UIStackView = UIStackView()
-   //   topStack.backgroundColor = .white
         topStack.axis = .vertical
         topStack.spacing = 4
         topStack.distribution = .fillEqually
@@ -29,7 +28,7 @@ final class ProfileHeaderView: UIView {
         return topStack
     }()
 
-    private lazy var titleLabel: UILabel = {
+    private lazy var fullNameLabel: UILabel = {
         var titleLabel: UILabel = UILabel()
         titleLabel.text = "Доброе Солнышко"
         titleLabel.textColor = .black
@@ -60,7 +59,7 @@ final class ProfileHeaderView: UIView {
         return statusTextField
     }()
 
-    private lazy var statusButton: UIButton = {
+    private lazy var setStatusButton: UIButton = {
         var statusButton: UIButton = UIButton()
         statusButton.backgroundColor = .blue
  //       statusButton.clipsToBounds = true
@@ -79,6 +78,7 @@ final class ProfileHeaderView: UIView {
         return ""
     }()
 
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -91,7 +91,6 @@ final class ProfileHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
-
     }
 
     func setFirtResponder() {
@@ -101,10 +100,10 @@ final class ProfileHeaderView: UIView {
     private func setupView() {
         self.addSubview(self.avatarImageView)
         self.addSubview(self.topStack)
-        self.topStack.addArrangedSubview(self.titleLabel)
+        self.topStack.addArrangedSubview(self.fullNameLabel)
         self.topStack.addArrangedSubview(self.statusLabel)
         self.addSubview(self.statusTextField)
-        self.addSubview(self.statusButton)
+        self.addSubview(self.setStatusButton)
 
 
         NSLayoutConstraint.activate([
@@ -124,11 +123,10 @@ final class ProfileHeaderView: UIView {
             self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
 
-            self.statusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 18),
-            self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.statusButton.heightAnchor.constraint(equalToConstant: 50)
-
+            self.setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 18),
+            self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
          ])
     }
 
