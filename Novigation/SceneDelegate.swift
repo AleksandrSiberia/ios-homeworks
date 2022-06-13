@@ -25,8 +25,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navFeedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "house"), tag: 1)
         navProfileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 2)
 
-        // по умолчанию загружается первый viewController добавленный в
-        // массив TabBarController
         
         self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
@@ -37,8 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 
-
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

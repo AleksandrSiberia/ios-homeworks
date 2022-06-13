@@ -9,39 +9,78 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    private lazy var buttonPost: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .systemBrown
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    private lazy var postStack: UIStackView = {
+        var postStack = UIStackView()
+        postStack.backgroundColor = .white
+        postStack.translatesAutoresizingMaskIntoConstraints = false
+        postStack.axis = .vertical
+        postStack.distribution = .fillEqually
+        postStack.spacing = 10
+        postStack.backgroundColor = .systemBlue
+        return postStack
+    }()
 
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
+    private lazy var postButton: UIButton = {
+        var postButton = UIButton()
+        postButton.translatesAutoresizingMaskIntoConstraints = false
+        postButton.backgroundColor = .systemYellow
+        postButton.setTitle("Пост1", for: .normal)
+        postButton.addTarget(self, action: #selector(didTapPostButton), for: .touchUpInside)
+        return postButton
+    }()
 
-        button.frame = CGRect(x: 20, y: screenHeight - 140, width: screenWidth - 40, height: 50)
-        button.layer.cornerRadius = button.frame.height / 2
-        button.setTitle("Мой пост", for: .normal)
-
-        return button
+    private lazy var postButton2: UIButton = {
+        var postButton2 = UIButton()
+        postButton2.translatesAutoresizingMaskIntoConstraints = false
+        postButton2.backgroundColor = .systemYellow
+        postButton2.setTitle("Пост2", for: .normal)
+        postButton2.addTarget(self, action: #selector(didTapPostButton2), for: .touchUpInside)
+        return postButton2
     }()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.postButton.layer.cornerRadius = self.postButton.frame.height / 2
+        self.postButton2.layer.cornerRadius = self.postButton2.frame.height / 2
+    }
+
+    private func setupView() {
         self.view.backgroundColor = .systemBlue
         self.navigationItem.title = "Лента"
-        self.view.addSubview(self.buttonPost)
+        self.view.addSubview(postStack)
+        self.postStack.addArrangedSubview(postButton)
+        self.postStack.addArrangedSubview(postButton2)
+
+
+        NSLayoutConstraint.activate([
+
+            self.postStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            self.postStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.postStack.widthAnchor.constraint(equalToConstant: 200),
+            self.postStack.heightAnchor.constraint(equalToConstant: 200),
+        ])
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
 
-
-    @objc private func didTapButton(){
+    @objc private func didTapPostButton(){
         let postViewController = PostViewController()
-        let post = Post(title: "Мой пост")
-        postViewController.post = post
         self.navigationController?.pushViewController(postViewController, animated: true)
+        if let title = postButton.titleLabel?.text {
+            postViewController.title = title }
+    }
+
+
+    @objc private func didTapPostButton2() {
+        let postViewController = PostViewController()
+        self.navigationController?.pushViewController(postViewController, animated: true)
+        if let text = postButton2.titleLabel?.text {
+            postViewController.title = text
+        }
    }
 }
