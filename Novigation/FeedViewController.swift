@@ -9,7 +9,6 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-
     private lazy var postStack: UIStackView = {
         var postStack = UIStackView()
         postStack.backgroundColor = .white
@@ -42,10 +41,6 @@ class FeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
         setupView()
     }
 

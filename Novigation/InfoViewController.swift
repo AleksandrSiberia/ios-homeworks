@@ -38,10 +38,9 @@ class InfoViewController: UIViewController {
                                          style: .cancel,
                                          handler: {_ in
             print("Cancel")
-
         })
+        
         alertDelete.addAction(cancelAction)
-
        let deleteAction = UIAlertAction(title: "Удалить",
                       style: .destructive,
                       handler: {_ in
@@ -49,7 +48,6 @@ class InfoViewController: UIViewController {
            print("Delete")
         })
         alertDelete.addAction(deleteAction)
-        
         present(alertDelete, animated: true)
     }
 }

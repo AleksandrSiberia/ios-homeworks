@@ -33,7 +33,6 @@ final class ProfileHeaderView: UIView {
         titleLabel.text = "Доброе Солнышко"
         titleLabel.textColor = .black
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-    //  titleLabel.backgroundColor = .red
         return titleLabel
     }()
 
@@ -62,7 +61,6 @@ final class ProfileHeaderView: UIView {
     private lazy var setStatusButton: UIButton = {
         var statusButton: UIButton = UIButton()
         statusButton.backgroundColor = .blue
- //       statusButton.clipsToBounds = true
         statusButton.translatesAutoresizingMaskIntoConstraints = false
         statusButton.setTitle("Поменять статус", for: .normal)
         statusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
@@ -131,10 +129,8 @@ final class ProfileHeaderView: UIView {
     }
 
 
-
     @objc private func buttonPressed() {
         statusLabel.text = statusText
-
         print(statusText)
     }
 

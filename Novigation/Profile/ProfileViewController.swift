@@ -30,14 +30,6 @@ final class ProfileViewController: UIViewController {
         self.view.backgroundColor = .gray
         self.navigationItem.title = "Профиль"
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
-
-//        let gesture = UIGestureRecognizer()
-//        gesture.addTarget(self, action: #selector(gestureAction))
-//        self.view.addGestureRecognizer(gesture)
-
-    }
-
-    override func viewWillLayoutSubviews() {
         self.view.addSubview(profileHeaderView)
         self.view.addSubview(titleButton)
         profileHeaderView.backgroundColor = .systemGray6
@@ -62,9 +54,4 @@ final class ProfileViewController: UIViewController {
 
     }
 
-//    @objc private func gestureAction() {
-//        self.view.endEditing(true)
-//
-//    }
-    
 }
