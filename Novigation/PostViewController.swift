@@ -26,13 +26,7 @@ class PostViewController: UIViewController {
     @objc private func didTapButton(){
         let infoViewController = InfoViewController()
         let infoUINavigationController = UINavigationController(rootViewController: infoViewController)
-
         present(infoUINavigationController, animated: true)
 
     }
-
-
-
-
-
 }

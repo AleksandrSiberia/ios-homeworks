@@ -24,7 +24,6 @@ final class ProfileViewController: UIViewController {
         return titleButton
     }()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray
@@ -53,5 +52,4 @@ final class ProfileViewController: UIViewController {
         profileHeaderView.setFirtResponder()
 
     }
-
 }
