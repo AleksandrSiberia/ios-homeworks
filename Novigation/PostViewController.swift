@@ -8,6 +8,7 @@
 import UIKit
 
 class PostViewController: UIViewController {
+    
     var post: Post?
     
     override func viewDidLoad() {
@@ -16,7 +17,6 @@ class PostViewController: UIViewController {
         let rightBotton = UIBarButtonItem(title: "Настройки", style: .plain, target: self, action: #selector(didTapButton))
         self.navigationItem.rightBarButtonItem = rightBotton
         if let post1: String = self.post?.title {
-            print(post1)
             self.navigationItem.title = post1
         }
         else {

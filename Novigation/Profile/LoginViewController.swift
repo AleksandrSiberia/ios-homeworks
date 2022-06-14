@@ -108,6 +108,7 @@ class LoginViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -150,9 +151,8 @@ class LoginViewController: UIViewController {
             let bottomButton =  loginButton.frame.origin.y + loginButton.frame.height
             let keyboardOriginY = self.view.frame.height - keyboard.cgRectValue.height
             if bottomButton > keyboardOriginY {
-                let hidnSize = bottomButton - keyboardOriginY + 16
-
-                scrollView.contentOffset = CGPoint(x: 0, y: hidnSize)
+                let hidingSize = bottomButton - keyboardOriginY + 16
+                scrollView.contentOffset = CGPoint(x: 0, y: hidingSize)
             }
         }
     }
