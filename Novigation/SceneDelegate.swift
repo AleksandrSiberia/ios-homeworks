@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
-        tabBarController.viewControllers = [navFeedViewController, navLoginViewController, navLoginViewController]
+        tabBarController.viewControllers = [navFeedViewController, navLoginViewController]
 
         navFeedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "house"), tag: 1)
 

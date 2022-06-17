@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileHeaderView: UIView {
+final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private lazy var avatarImageView: UIImageView = {
         var avatarImageView = UIImageView()
@@ -76,16 +76,17 @@ final class ProfileHeaderView: UIView {
         return ""
     }()
 
-   
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         self.setupView()
     }
 
     required init?(coder: NSCoder) {
-         fatalError("init(coder:) has not been implemented")
-     }
+        fatalError("init(coder:) has not been implemented")
+    }
 
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
@@ -102,30 +103,36 @@ final class ProfileHeaderView: UIView {
         self.topStack.addArrangedSubview(self.statusLabel)
         self.addSubview(self.statusTextField)
         self.addSubview(self.setStatusButton)
+        let setupConstraints = setupConstraints()
 
 
-        NSLayoutConstraint.activate([
+        NSLayoutConstraint.activate(
+            setupConstraints
+         )
+    }
 
-            self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            self.avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            self.avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+    private func setupConstraints() -> [NSLayoutConstraint] {
+        return [
+        self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+        self.avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+        self.avatarImageView.widthAnchor.constraint(equalToConstant: 100),
+        self.avatarImageView.heightAnchor.constraint(equalToConstant: 100),
 
-            self.topStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
-            self.topStack.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
-            self.topStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.topStack.bottomAnchor.constraint(equalTo: self.avatarImageView.bottomAnchor, constant: -18),
+        self.topStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+        self.topStack.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
+        self.topStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+        self.topStack.bottomAnchor.constraint(equalTo: self.avatarImageView.bottomAnchor, constant: -18),
 
-            self.statusTextField.topAnchor.constraint(equalTo: topStack.bottomAnchor),
-            self.statusTextField.leadingAnchor.constraint(equalTo: topStack.leadingAnchor),
-            self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
+        self.statusTextField.topAnchor.constraint(equalTo: topStack.bottomAnchor),
+        self.statusTextField.leadingAnchor.constraint(equalTo: topStack.leadingAnchor),
+        self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+        self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
 
-            self.setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 18),
-            self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
-         ])
+        self.setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 18),
+        self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+        self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+        self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
+        ]
     }
 
 
@@ -144,7 +151,6 @@ final class ProfileHeaderView: UIView {
 }
 
 extension ProfileHeaderView: UITextFieldDelegate {
-
 }
 
 
