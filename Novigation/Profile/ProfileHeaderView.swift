@@ -14,7 +14,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarImageView.backgroundColor = .systemGray4
         avatarImageView.layer.borderColor = UIColor.white.cgColor
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
-        avatarImageView.image = UIImage(named: "sun")
+        avatarImageView.image = UIImage(named: "avatar")
         avatarImageView.layer.borderWidth = 3
         return avatarImageView
     }()
@@ -30,7 +30,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private lazy var fullNameLabel: UILabel = {
         var titleLabel: UILabel = UILabel()
-        titleLabel.text = "Доброе Солнышко"
+        titleLabel.text = "AleksandrSiberia"
         titleLabel.textColor = .black
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return titleLabel
@@ -89,7 +89,8 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
+       self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
+        self.avatarImageView.layer.masksToBounds = true
     }
 
     func setFirtResponder() {
