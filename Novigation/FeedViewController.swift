@@ -72,15 +72,17 @@ class FeedViewController: UIViewController {
         let postViewController = PostViewController()
         self.navigationController?.pushViewController(postViewController, animated: true)
         if let title = postButton.titleLabel?.text {
-            postViewController.title = title }
+            postViewController.post = Post(title: title)
+        }
     }
 
 
     @objc private func didTapPostButton2() {
         let postViewController = PostViewController()
         self.navigationController?.pushViewController(postViewController, animated: true)
-        if let text = postButton2.titleLabel?.text {
-            postViewController.title = text
+        if let title = postButton2.titleLabel?.text {
+            postViewController.post = Post(title: title)
         }
-   }
+    }
 }
+

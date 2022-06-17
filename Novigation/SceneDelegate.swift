@@ -17,13 +17,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let navFeedViewController = UINavigationController(rootViewController: FeedViewController())
         let navProfileViewController = UINavigationController(rootViewController: ProfileViewController())
+        let navLoginViewController = UINavigationController(rootViewController: LoginViewController())
 
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
-        tabBarController.viewControllers = [navFeedViewController, navProfileViewController]
+        tabBarController.viewControllers = [navFeedViewController, navLoginViewController, navLoginViewController]
 
         navFeedViewController.tabBarItem = UITabBarItem(title: "Лента", image: UIImage(systemName: "house"), tag: 1)
-        navProfileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 2)
+
+        navLoginViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 2)
 
         
         self.window?.rootViewController = tabBarController
