@@ -11,22 +11,19 @@ class PostCell: UITableViewCell {
 
     private lazy var authorLabel: UILabel = {
         var authorLabel = UILabel()
-        authorLabel.text = "AleksandrSiberia"
         authorLabel.backgroundColor = .white
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
-        authorLabel.numberOfLines = 0
+        authorLabel.numberOfLines = 2
+        authorLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        authorLabel.textColor = .black
         return authorLabel
     }()
 
-    private lazy var postImage: UIImage = {
-        var postImage = UIImage()
-        return postImage
-    }()
-
     private lazy var postImageView: UIImageView = {
-        var postImageView = UIImageView(image: postImage)
+        var postImageView = UIImageView()
         postImageView.translatesAutoresizingMaskIntoConstraints = false
         postImageView.backgroundColor = .black
+        postImageView.contentMode = .scaleAspectFit
         return postImageView
     }()
 
@@ -35,7 +32,8 @@ class PostCell: UITableViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.backgroundColor = .white
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.text = "descriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabeldescriptionLabel"
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.textColor = .systemGray
         return descriptionLabel
     }()
 
@@ -44,7 +42,8 @@ class PostCell: UITableViewCell {
         likesLabel.translatesAutoresizingMaskIntoConstraints = false
         likesLabel.backgroundColor = .white
         likesLabel.numberOfLines = 0
-        likesLabel.text = "Likes: 240"
+        likesLabel.font = UIFont.systemFont(ofSize: 16)
+        likesLabel.textColor = .black
         return likesLabel
     }()
 
@@ -53,7 +52,8 @@ class PostCell: UITableViewCell {
         viewsLabel.translatesAutoresizingMaskIntoConstraints = false
         viewsLabel.backgroundColor = .white
         viewsLabel.numberOfLines = 0
-        viewsLabel.text = "Views: 3120"
+        viewsLabel.font = UIFont.systemFont(ofSize: 16)
+        viewsLabel.textColor = .black
         return viewsLabel
     }()
 
@@ -66,9 +66,15 @@ class PostCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupView() {
-        self.backgroundColor = .red
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        NSLayoutConstraint.activate([
+            self.likesLabel.widthAnchor.constraint(equalToConstant: (self.frame.width / 2) - 16),
+            self.viewsLabel.widthAnchor.constraint(equalToConstant: (self.frame.width / 2) - 16)
+        ])
+    }
 
+    private func setupView() {
         self.addSubview(authorLabel)
         self.addSubview(postImageView)
         self.addSubview(descriptionLabel)
@@ -85,18 +91,20 @@ class PostCell: UITableViewCell {
             self.postImageView.heightAnchor.constraint(equalTo: self.widthAnchor),
 
             self.descriptionLabel.topAnchor.constraint(equalTo: self.postImageView.bottomAnchor, constant: 16),
-            self.descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
 
             self.likesLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
             self.descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             self.likesLabel.trailingAnchor.constraint(equalTo: self.viewsLabel.leadingAnchor),
             self.likesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
 
+
             self.viewsLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
             self.viewsLabel.leadingAnchor.constraint(equalTo: self.likesLabel.trailingAnchor),
             self.viewsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.viewsLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+            self.viewsLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+
         ])
     }
 
@@ -104,8 +112,8 @@ class PostCell: UITableViewCell {
         self.authorLabel.text = post.author
         self.postImageView.image = UIImage(named: post.image)
         self.descriptionLabel.text = post.description
-        self.likesLabel.text = String(post.likes)
-        self.viewsLabel.text = String(post.views)
+        self.likesLabel.text = "Likes: " + String(post.likes)
+        self.viewsLabel.text = "Views: " + String(post.views)
             }
 }
 

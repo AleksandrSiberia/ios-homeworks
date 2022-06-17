@@ -15,7 +15,8 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarImageView.layer.borderColor = UIColor.white.cgColor
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "avatar")
-        avatarImageView.layer.borderWidth = 3
+        avatarImageView.contentMode = .scaleAspectFill
+        avatarImageView.layer.borderWidth = 1
         return avatarImageView
     }()
 
@@ -38,7 +39,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private lazy var statusLabel: UILabel = {
         var statusLabel: UILabel = UILabel()
-        statusLabel.text = "Дарю всем свет"
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         statusLabel.textColor = .gray
         return statusLabel
@@ -89,7 +89,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-       self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
         self.avatarImageView.layer.masksToBounds = true
     }
 
