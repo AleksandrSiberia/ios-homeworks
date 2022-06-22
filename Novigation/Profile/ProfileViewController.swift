@@ -15,43 +15,51 @@ final class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
         tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
         tableView.register(PostCell.self, forCellReuseIdentifier: "PostCell")
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray
-        self.navigationItem.title = "Профиль"
-        self.navigationController?.navigationBar.backgroundColor = .systemBackground
         self.view.addSubview(tableView)
-        let setupConstraints = setupConstraints()
-        NSLayoutConstraint.activate(
-            setupConstraints
-        )
+        setupConstraints()
     }
 
-    private func setupConstraints() -> [NSLayoutConstraint] {
-        let topAnchor =  self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor)
-        let leadingAnchor =   self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
-        let  trailingAnchor =  self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        let bottomAnchor =  self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        return [topAnchor, leadingAnchor, trailingAnchor, bottomAnchor]
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
     }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+        self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+        self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+        self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
+    }
+
+
 }
 
-extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+extension ProfileViewController: UITableViewDelegate, UITableViewDataSource  {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayModelPost.count
+        section == 1 ? arrayModelPost.count : 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(indexPath.row)
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosTableViewCell", for: indexPath) as? PhotosTableViewCell else { let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+                return cell
+            }
+            return cell
+        }
 
+        else {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostCell else { let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
             return cell
         }
@@ -60,10 +68,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let post = arrayModelPost[indexPathRow]
         cell.setup(this: post)
         return cell
+        }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        2
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -74,12 +83,19 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         return nil
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-        return 220
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let photosViewController = PhotosViewController()
+       //     let navPhotosViewController = UINavigationController(rootViewController: PhotosViewController())
+
+            photosViewController.navigationItem.title = "Photos Gallery"
+
+
+            self.navigationController?.pushViewController(photosViewController, animated: true)
         }
-        return 50
     }
+
+
 
 }
 

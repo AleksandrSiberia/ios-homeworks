@@ -99,12 +99,10 @@ class PostCell: UITableViewCell {
             self.likesLabel.trailingAnchor.constraint(equalTo: self.viewsLabel.leadingAnchor),
             self.likesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
 
-
             self.viewsLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
             self.viewsLabel.leadingAnchor.constraint(equalTo: self.likesLabel.trailingAnchor),
             self.viewsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.viewsLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
-
         ])
     }
 

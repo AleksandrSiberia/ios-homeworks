@@ -13,6 +13,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         var avatarImageView = UIImageView()
         avatarImageView.backgroundColor = .systemGray4
         avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.masksToBounds = true
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.image = UIImage(named: "avatar")
         avatarImageView.contentMode = .scaleAspectFill
@@ -90,7 +91,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
-        self.avatarImageView.layer.masksToBounds = true
     }
 
     func setFirtResponder() {
@@ -104,16 +104,12 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.topStack.addArrangedSubview(self.statusLabel)
         self.addSubview(self.statusTextField)
         self.addSubview(self.setStatusButton)
-        let setupConstraints = setupConstraints()
+        setupConstraints()
 
-
-        NSLayoutConstraint.activate(
-            setupConstraints
-         )
     }
 
-    private func setupConstraints() -> [NSLayoutConstraint] {
-        return [
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
         self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
         self.avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
         self.avatarImageView.widthAnchor.constraint(equalToConstant: 100),
@@ -132,8 +128,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 18),
         self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
         self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-        self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
-        ]
+        self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+        self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+        ])
     }
 
 
