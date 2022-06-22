@@ -25,12 +25,12 @@ class LoginViewController: UIViewController {
 
     private lazy var stackView: UIStackView = {
         var stackView = UIStackView()
-        stackView.backgroundColor = .systemGray6
+        stackView.backgroundColor = .white
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
-        stackView.layer.cornerRadius = 10
-        stackView.layer.borderWidth = 0.5
+//        stackView.layer.cornerRadius = 10
+//        stackView.layer.borderWidth = 0.5
         stackView.layer.borderColor = UIColor.lightGray.cgColor
         stackView.spacing = 0.5
         return stackView
@@ -42,6 +42,10 @@ class LoginViewController: UIViewController {
         loginTextField.placeholder = "    Email or phone"
         loginTextField.textColor = .black
         loginTextField.font = UIFont.systemFont(ofSize: 16)
+        loginTextField.layer.cornerRadius = 10
+        loginTextField.layer.borderWidth = 0.5
+        loginTextField.layer.borderColor = UIColor.lightGray.cgColor
+        loginTextField.backgroundColor = .systemGray6
         loginTextField.autocapitalizationType = .none
         loginTextField.keyboardType = .phonePad
         loginTextField.clearButtonMode = .whileEditing
@@ -53,6 +57,10 @@ class LoginViewController: UIViewController {
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.placeholder = "    Password"
         passwordTextField.textColor = .black
+        passwordTextField.layer.cornerRadius = 10
+        passwordTextField.layer.borderWidth = 0.5
+        passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordTextField.backgroundColor = .systemGray6
         passwordTextField.font = UIFont.systemFont(ofSize: 16)
         passwordTextField.autocapitalizationType = .none
         passwordTextField.keyboardType = .phonePad
@@ -90,21 +98,18 @@ class LoginViewController: UIViewController {
         let scrollViewConstraint: [NSLayoutConstraint] = scrollViewConstraint()
         let logoVkViewConstraint: [NSLayoutConstraint] = logoVkViewConstraint()
         let stackViewConstraints: [NSLayoutConstraint] = stackViewConstraints()
-        let constrain: [NSLayoutConstraint] = [
-            self.loginTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            self.loginTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.loginButton.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: 16),
-            self.loginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.loginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            self.loginButton.heightAnchor.constraint(equalToConstant: 50)
-                ]
+        let loginButtonConstraints: [NSLayoutConstraint] = loginButtonConstraints()
+        let loginTextFieldConstraints: [NSLayoutConstraint] = loginTextFieldConstraints()
+
         NSLayoutConstraint.activate(
             scrollViewConstraint +
             logoVkViewConstraint +
             stackViewConstraints +
-            constrain
+            loginTextFieldConstraints +
+            loginButtonConstraints
             )
     }
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -137,6 +142,20 @@ class LoginViewController: UIViewController {
         return [topAnchor, heightAnchor]
     }
 
+    private func loginTextFieldConstraints() -> [NSLayoutConstraint] {
+        let trailingAnchor = self.loginTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16)
+        let leadingAnchor = self.loginTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16)
+        return [trailingAnchor, leadingAnchor]
+    }
+
+    private func loginButtonConstraints() -> [NSLayoutConstraint] {
+        let topAnchor = self.loginButton.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: 16)
+        let leadingAnchor = self.loginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16)
+        let trailingAnchor =  self.loginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16)
+        let heightAnchor = self.loginButton.heightAnchor.constraint(equalToConstant: 50)
+        return [topAnchor, leadingAnchor, trailingAnchor, heightAnchor]
+    }
+
     private func setupGestures() {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(offKeyboard))
         self.view.addGestureRecognizer(gesture)
@@ -156,6 +175,7 @@ class LoginViewController: UIViewController {
             }
         }
     }
+
     @objc private func keyboardWillHide(_ notification: Notification) {
         scrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
