@@ -26,6 +26,10 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         self.view.addSubview(tableView)
         setupConstraints()
+
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        tapGestureRecognizer.addTarget(self, action: #selector(handleTapGestureRecognizer(_:)))
+        self.tableView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +44,17 @@ final class ProfileViewController: UIViewController {
         self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+    }
+
+    @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
+
+        if gesture.state == UIGestureRecognizer.State.ended {
+            
+
+            print(#function)
+
+        }
+
     }
 
 
@@ -86,8 +101,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             let photosViewController = PhotosViewController()
-       //     let navPhotosViewController = UINavigationController(rootViewController: PhotosViewController())
-
             photosViewController.navigationItem.title = "Photos Gallery"
 
 

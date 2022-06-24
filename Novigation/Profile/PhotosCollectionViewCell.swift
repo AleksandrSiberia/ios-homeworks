@@ -17,6 +17,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -31,8 +32,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
             self.imageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.imageView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            self.imageView.heightAnchor.constraint(equalTo: self.widthAnchor),
             self.imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }

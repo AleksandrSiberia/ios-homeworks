@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
-    private lazy var avatarImageView: UIImageView = {
+    lazy var avatarImageView: UIImageView = {
         var avatarImageView = UIImageView()
         avatarImageView.backgroundColor = .systemGray4
         avatarImageView.layer.borderColor = UIColor.white.cgColor
@@ -81,6 +81,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.setupView()
+
+//        let tapGestureRecognizer = UIGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
+//        self.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     required init?(coder: NSCoder) {
@@ -105,7 +108,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.addSubview(self.statusTextField)
         self.addSubview(self.setStatusButton)
         setupConstraints()
-
     }
 
     private func setupConstraints() {
@@ -145,6 +147,10 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             statusText = text
         }
     }
+
+//    @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
+//        print(#function, gesture)
+//    }
 
 }
 

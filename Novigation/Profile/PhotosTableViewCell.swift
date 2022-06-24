@@ -13,8 +13,6 @@ class PhotosTableViewCell: UITableViewCell {
         static let NumberItemInLine: CGFloat = 4
     }
 
-
-
     private lazy var labelCollectionPhoto: UILabel = {
         var labelCollectionPhoto = UILabel()
         labelCollectionPhoto.text = "  Label"
@@ -22,7 +20,6 @@ class PhotosTableViewCell: UITableViewCell {
         labelCollectionPhoto.numberOfLines = 0
         return labelCollectionPhoto
     }()
-
 
     private lazy var collectionFlowLayout: UICollectionViewFlowLayout = {
         var collectionFlowLayout = UICollectionViewFlowLayout()
@@ -33,7 +30,7 @@ class PhotosTableViewCell: UITableViewCell {
     }()
 
     private lazy var photoCollectionView: UICollectionView = {
-        var photoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionFlowLayout)
+        var photoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionFlowLayout)
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self 
         photoCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "DefaultCell")
@@ -61,10 +58,9 @@ class PhotosTableViewCell: UITableViewCell {
             self.labelCollectionPhoto.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.labelCollectionPhoto.bottomAnchor.constraint(equalTo: self.photoCollectionView.topAnchor),
 
-
-            self.photoCollectionView.topAnchor.constraint(equalTo: self.labelCollectionPhoto.bottomAnchor),
-            self.photoCollectionView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            self.photoCollectionView.heightAnchor.constraint(equalToConstant: self.frame.width / 3 + 10 ),
+            self.photoCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.photoCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.photoCollectionView.heightAnchor.constraint(equalToConstant: self.frame.width / 2.9 ),
             self.photoCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
          ])
     }
