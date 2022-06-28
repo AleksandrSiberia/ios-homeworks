@@ -9,7 +9,6 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
-
     private lazy var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,16 +24,31 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(tableView)
-        setupConstraints()
-
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        tapGestureRecognizer.addTarget(self, action: #selector(handleTapGestureRecognizer(_:)))
-        self.tableView.addGestureRecognizer(tapGestureRecognizer)
+        self.setupConstraints()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setupGesture()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+
+    private func setupGesture() {
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        tapGestureRecognizer.addTarget(self, action: #selector(handleTapGestureRecognizer(_:)))
+
+        let profileHeaderView = ProfileHeaderView()
+        print(profileHeaderView.frame)
+
+        profileHeaderView.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     private func setupConstraints() {
@@ -47,18 +61,9 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
-
-        if gesture.state == UIGestureRecognizer.State.ended {
-            
-
-            print(#function)
-
-        }
-
-    }
-
-
+            }
 }
+
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource  {
 

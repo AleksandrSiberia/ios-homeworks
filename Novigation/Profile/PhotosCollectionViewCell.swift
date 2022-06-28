@@ -24,12 +24,20 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(imageView)
+
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setupConstraint()
     }
 
     private func setupConstraint() {
+        let screenWidth = UIScreen.main.bounds.width
         NSLayoutConstraint.activate([
             self.imageView.topAnchor.constraint(equalTo: self.topAnchor),
+//            self.imageView.widthAnchor.constraint(equalToConstant: screenWidth),
+//            self.imageView.heightAnchor.constraint(equalToConstant: screenWidth),
             self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)

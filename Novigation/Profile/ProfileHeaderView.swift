@@ -9,6 +9,8 @@ import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
+
+
     lazy var avatarImageView: UIImageView = {
         var avatarImageView = UIImageView()
         avatarImageView.backgroundColor = .systemGray4
@@ -18,6 +20,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarImageView.image = UIImage(named: "avatar")
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.borderWidth = 1
+        avatarImageView.isUserInteractionEnabled = true
         return avatarImageView
     }()
 
@@ -81,9 +84,8 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.setupView()
-
-//        let tapGestureRecognizer = UIGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
-//        self.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
+        self.setupConstraints()
+        self.setupGesture()
     }
 
     required init?(coder: NSCoder) {
@@ -94,21 +96,26 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
-    }
+            }
+
+    private func setupGesture() {
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        tapGestureRecognizer.addTarget(self, action: #selector(handleTapGestureRecognizer(_:)))
+        self.avatarImageView.addGestureRecognizer(tapGestureRecognizer) }
 
     func setFirtResponder() {
         self.statusTextField.becomeFirstResponder()
     }
 
     private func setupView() {
-        self.addSubview(self.avatarImageView)
-        self.addSubview(self.topStack)
+
         self.topStack.addArrangedSubview(self.fullNameLabel)
         self.topStack.addArrangedSubview(self.statusLabel)
-        self.addSubview(self.statusTextField)
-        self.addSubview(self.setStatusButton)
-        setupConstraints()
+
+        [avatarImageView, topStack, statusTextField, setStatusButton].forEach({self.addSubview($0)})
+        self.insertSubview(avatarImageView, at: 3)
     }
+
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -135,6 +142,84 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         ])
     }
 
+    private func basicAnimation() {
+        let screenMain = UIScreen.main.bounds
+        let startPoint = self.avatarImageView.center
+
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       options: .curveEaseInOut) {
+
+            self.avatarImageView.center = CGPoint(x: screenMain.width / 2.0, y: screenMain.height / 2.0)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3,
+                           delay: 0,
+                           options: .curveLinear) {
+
+                self.avatarImageView.transform = CGAffineTransform(scaleX: 2, y: 2)
+
+        }  completion: { _ in
+        //    self.avatarImageView.transform = .identity
+        //    self.avatarImageView.center = startPoint
+
+        }
+    }
+    }
+
+    private func frameAnimation() {
+        let screenMain = UIScreen.main.bounds
+
+        UIView.animateKeyframes(withDuration: 4.0,
+                                delay: 0,
+                                options: .calculationModeCubic) {
+
+            UIView.addKeyframe(withRelativeStartTime: 0.0,
+                               relativeDuration: 2.0) {
+                self.avatarImageView.center = CGPoint(x: screenMain.width / 2, y: screenMain.height / 2)
+            }
+
+
+            UIView.addKeyframe(withRelativeStartTime: 2.0,
+                               relativeDuration: 4.0) {
+                self.avatarImageView.center = CGPoint(x: screenMain.width / 2 + 150, y: screenMain.height / 2)
+            }
+        }
+    }
+
+    private func layerAnimation() {
+
+            CATransaction.begin()
+
+            CATransaction.setCompletionBlock {
+                self.avatarImageView.transform = CGAffineTransform(scaleX: 2, y: 2)
+            }
+
+            let startPosition = avatarImageView.center
+            let screen = UIScreen.main.bounds
+
+            let animation = CABasicAnimation(keyPath: #keyPath(CALayer.position))
+            animation.fromValue = startPosition
+            animation.toValue = CGPoint(x: screen.width / 2, y: screen.height / 2)
+
+            animation.duration = 0.5
+            animation.repeatCount = 2
+            animation.isRemovedOnCompletion = true
+            animation.autoreverses = true
+            self.avatarImageView.layer.add(animation, forKey: #keyPath(CALayer.position))
+            CATransaction.commit()
+    }
+
+    @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
+
+        let startPosition = avatarImageView.center
+        let screen = UIScreen.main.bounds
+        
+     //   layerAnimation()
+   //     frameAnimation()
+    //    basicAnimation()
+
+
+    }
 
     @objc private func buttonPressed() {
         statusLabel.text = statusText
@@ -147,11 +232,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             statusText = text
         }
     }
-
-//    @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
-//        print(#function, gesture)
-//    }
-
 }
 
 extension ProfileHeaderView: UITextFieldDelegate {
