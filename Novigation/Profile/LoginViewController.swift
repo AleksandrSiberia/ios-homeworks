@@ -29,8 +29,6 @@ class LoginViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
-//        stackView.layer.cornerRadius = 10
-//        stackView.layer.borderWidth = 0.5
         stackView.layer.borderColor = UIColor.lightGray.cgColor
         stackView.spacing = 0.5
         return stackView
@@ -78,6 +76,7 @@ class LoginViewController: UIViewController {
         var loginButton = UIButton()
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.layer.cornerRadius = 10
+        loginButton.layer.masksToBounds = true
         loginButton.setBackgroundImage(bluePixel, for: .normal)
         loginButton.setTitle("Авторизоваться", for: .normal)
         loginButton.addTarget(self, action: #selector(targetLoginButton), for: .touchUpInside)
@@ -87,7 +86,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGestures()
-        self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .white
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(imageVkView)
@@ -113,6 +111,8 @@ class LoginViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        self.navigationController?.navigationBar.isHidden = true
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 
