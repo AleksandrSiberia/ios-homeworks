@@ -9,6 +9,7 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
+
     private lazy var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,22 +35,13 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.setupGesture()
+  //      self.setupGesture()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
 
-    private func setupGesture() {
-        let tapGestureRecognizer = UITapGestureRecognizer()
-        tapGestureRecognizer.addTarget(self, action: #selector(handleTapGestureRecognizer(_:)))
-
-        let profileHeaderView = ProfileHeaderView()
-        print(profileHeaderView.frame)
-
-        profileHeaderView.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
-    }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([

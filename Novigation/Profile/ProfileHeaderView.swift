@@ -9,9 +9,13 @@ import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
+    private lazy var startAvatarPosition: CGPoint = {
+        var startAvatarPosition = CGPoint()
+        return startAvatarPosition
+    }()
 
 
-    lazy var avatarImageView: UIImageView = {
+    private lazy var avatarImageView: UIImageView = {
         var avatarImageView = UIImageView()
         avatarImageView.backgroundColor = .systemGray4
         avatarImageView.layer.borderColor = UIColor.white.cgColor
@@ -80,6 +84,26 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return ""
     }()
 
+    private var viewForAnimation: UIView = {
+        var viewForAnimation = UIView()
+        viewForAnimation.translatesAutoresizingMaskIntoConstraints = false
+        viewForAnimation.isHidden = true
+        viewForAnimation.layer.opacity = 0.5
+        return viewForAnimation
+    }()
+
+    private var buttonOffAnimation: UIButton = {
+        var buttonOffAnimation = UIButton()
+        buttonOffAnimation.translatesAutoresizingMaskIntoConstraints = false
+        buttonOffAnimation.isHidden = true
+        buttonOffAnimation.setImage(UIImage(named: "k"), for: .normal)
+        buttonOffAnimation.layer.cornerRadius = 20
+        buttonOffAnimation.layer.opacity = 0.5
+        buttonOffAnimation.layer.masksToBounds = true
+        buttonOffAnimation.addTarget(self, action: #selector(buttonOffAnimationTarget), for: .touchUpInside)
+        return buttonOffAnimation
+    }()
+
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -108,12 +132,10 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
 
     private func setupView() {
-
         self.topStack.addArrangedSubview(self.fullNameLabel)
         self.topStack.addArrangedSubview(self.statusLabel)
 
-        [avatarImageView, topStack, statusTextField, setStatusButton].forEach({self.addSubview($0)})
-        self.insertSubview(avatarImageView, at: 3)
+        [topStack, statusTextField, setStatusButton,viewForAnimation, buttonOffAnimation, avatarImageView].forEach({self.addSubview($0)})
     }
 
 
@@ -138,87 +160,45 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
         self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
         self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-        self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+        self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+
+        self.viewForAnimation.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+        self.viewForAnimation.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+
+        self.buttonOffAnimation.topAnchor.constraint(equalTo: self.viewForAnimation.topAnchor, constant: 14),
+        self.buttonOffAnimation.trailingAnchor.constraint(equalTo: self.viewForAnimation.trailingAnchor, constant: -14),
+        self.buttonOffAnimation.widthAnchor.constraint(equalToConstant: 40),
+        self.buttonOffAnimation.heightAnchor.constraint(equalToConstant: 40)
+
+
         ])
     }
 
     private func basicAnimation() {
+        print(avatarImageView.frame)
+        startAvatarPosition = self.avatarImageView.center
         let screenMain = UIScreen.main.bounds
-        let startPoint = self.avatarImageView.center
+        let scale = UIScreen.main.bounds.width
+        self.avatarImageView.layer.masksToBounds = false
+        self.avatarImageView.layer.borderWidth = 0
+        self.viewForAnimation.isHidden = false
+        self.buttonOffAnimation.isHidden = false
+        print(scale)
 
         UIView.animate(withDuration: 0.5,
                        delay: 0,
                        options: .curveEaseInOut) {
-
+            self.avatarImageView.layer.cornerRadius = 0
             self.avatarImageView.center = CGPoint(x: screenMain.width / 2.0, y: screenMain.height / 2.0)
-        } completion: { _ in
-            UIView.animate(withDuration: 0.3,
-                           delay: 0,
-                           options: .curveLinear) {
-
-                self.avatarImageView.transform = CGAffineTransform(scaleX: 2, y: 2)
-
-        }  completion: { _ in
-        //    self.avatarImageView.transform = .identity
-        //    self.avatarImageView.center = startPoint
+            self.avatarImageView.transform = CGAffineTransform(scaleX: 3, y: 3)
+            self.viewForAnimation.backgroundColor = .black
 
         }
     }
-    }
 
-    private func frameAnimation() {
-        let screenMain = UIScreen.main.bounds
-
-        UIView.animateKeyframes(withDuration: 4.0,
-                                delay: 0,
-                                options: .calculationModeCubic) {
-
-            UIView.addKeyframe(withRelativeStartTime: 0.0,
-                               relativeDuration: 2.0) {
-                self.avatarImageView.center = CGPoint(x: screenMain.width / 2, y: screenMain.height / 2)
-            }
-
-
-            UIView.addKeyframe(withRelativeStartTime: 2.0,
-                               relativeDuration: 4.0) {
-                self.avatarImageView.center = CGPoint(x: screenMain.width / 2 + 150, y: screenMain.height / 2)
-            }
-        }
-    }
-
-    private func layerAnimation() {
-
-            CATransaction.begin()
-
-            CATransaction.setCompletionBlock {
-                self.avatarImageView.transform = CGAffineTransform(scaleX: 2, y: 2)
-            }
-
-            let startPosition = avatarImageView.center
-            let screen = UIScreen.main.bounds
-
-            let animation = CABasicAnimation(keyPath: #keyPath(CALayer.position))
-            animation.fromValue = startPosition
-            animation.toValue = CGPoint(x: screen.width / 2, y: screen.height / 2)
-
-            animation.duration = 0.5
-            animation.repeatCount = 2
-            animation.isRemovedOnCompletion = true
-            animation.autoreverses = true
-            self.avatarImageView.layer.add(animation, forKey: #keyPath(CALayer.position))
-            CATransaction.commit()
-    }
-
+   
     @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
-
-        let startPosition = avatarImageView.center
-        let screen = UIScreen.main.bounds
-        
-     //   layerAnimation()
-   //     frameAnimation()
-    //    basicAnimation()
-
-
+        basicAnimation()
     }
 
     @objc private func buttonPressed() {
@@ -230,6 +210,26 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         let statusTextField: UITextField = TextField
         if let text = statusTextField.text  {
             statusText = text
+        }
+    }
+    @objc private func buttonOffAnimationTarget() {
+        print(#function)
+
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: .curveEaseInOut) {
+            self.avatarImageView.center = self.startAvatarPosition
+            self.avatarImageView.layer.cornerRadius =  50
+            self.avatarImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.viewForAnimation.backgroundColor = nil
+
+        }
+        completion: { _ in
+            self.avatarImageView.layer.borderWidth = 1
+            self.avatarImageView.layer.cornerRadius = 50
+            self.avatarImageView.layer.masksToBounds = true
+            self.viewForAnimation.isHidden = true
+            self.buttonOffAnimation.isHidden = true
         }
     }
 }

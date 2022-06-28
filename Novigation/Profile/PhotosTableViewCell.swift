@@ -15,7 +15,7 @@ class PhotosTableViewCell: UITableViewCell {
 
     private lazy var labelCollectionPhoto: UILabel = {
         var labelCollectionPhoto = UILabel()
-        labelCollectionPhoto.text = "Label"
+        labelCollectionPhoto.text = "Галерея"
         labelCollectionPhoto.translatesAutoresizingMaskIntoConstraints = false
         labelCollectionPhoto.numberOfLines = 0
         labelCollectionPhoto.font = .systemFont(ofSize: 20, weight: .bold)
