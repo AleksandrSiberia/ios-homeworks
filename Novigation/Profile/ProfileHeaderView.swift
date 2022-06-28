@@ -122,6 +122,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
             }
 
+
     private func setupGesture() {
         let tapGestureRecognizer = UITapGestureRecognizer()
         tapGestureRecognizer.addTarget(self, action: #selector(handleTapGestureRecognizer(_:)))
@@ -140,6 +141,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
 
 
     private func setupConstraints() {
+
+        let profileViewController = ProfileViewController()
+
         NSLayoutConstraint.activate([
         self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
         self.avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
@@ -162,15 +166,16 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
         self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
 
-        self.viewForAnimation.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-        self.viewForAnimation.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+        self.viewForAnimation.widthAnchor.constraint(equalToConstant: profileViewController.view.frame.width),
+        self.viewForAnimation.heightAnchor.constraint(equalToConstant:  profileViewController.view.frame.height),
+
+//        self.viewForAnimation.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+//        self.viewForAnimation.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
 
         self.buttonOffAnimation.topAnchor.constraint(equalTo: self.viewForAnimation.topAnchor, constant: 14),
         self.buttonOffAnimation.trailingAnchor.constraint(equalTo: self.viewForAnimation.trailingAnchor, constant: -14),
         self.buttonOffAnimation.widthAnchor.constraint(equalToConstant: 40),
         self.buttonOffAnimation.heightAnchor.constraint(equalToConstant: 40)
-
-
         ])
     }
 
@@ -178,7 +183,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         print(avatarImageView.frame)
         startAvatarPosition = self.avatarImageView.center
         let screenMain = UIScreen.main.bounds
-        let scale = UIScreen.main.bounds.width
+        let scale = UIScreen.main.bounds.width / avatarImageView.frame.width
         self.avatarImageView.layer.masksToBounds = false
         self.avatarImageView.layer.borderWidth = 0
         self.viewForAnimation.isHidden = false
@@ -190,7 +195,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
                        options: .curveEaseInOut) {
             self.avatarImageView.layer.cornerRadius = 0
             self.avatarImageView.center = CGPoint(x: screenMain.width / 2.0, y: screenMain.height / 2.0)
-            self.avatarImageView.transform = CGAffineTransform(scaleX: 3, y: 3)
+            self.avatarImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
             self.viewForAnimation.backgroundColor = .black
 
         }
