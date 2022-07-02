@@ -27,6 +27,5 @@ class PostViewController: UIViewController {
         let infoViewController = InfoViewController()
         let infoUINavigationController = UINavigationController(rootViewController: infoViewController)
         present(infoUINavigationController, animated: true)
-
     }
 }

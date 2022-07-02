@@ -24,6 +24,7 @@ class PostCell: UITableViewCell {
         postImageView.translatesAutoresizingMaskIntoConstraints = false
         postImageView.backgroundColor = .black
         postImageView.contentMode = .scaleAspectFit
+        postImageView.clipsToBounds = true
         return postImageView
     }()
 
@@ -85,16 +86,18 @@ class PostCell: UITableViewCell {
             self.authorLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             self.authorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.authorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.authorLabel.bottomAnchor.constraint(equalTo: self.postImageView.topAnchor, constant: -12),
 
-            self.postImageView.topAnchor.constraint(equalTo: self.authorLabel.bottomAnchor, constant: 12),
+
             self.postImageView.widthAnchor.constraint(equalTo: self.widthAnchor),
             self.postImageView.heightAnchor.constraint(equalTo: self.widthAnchor),
+            self.postImageView.bottomAnchor.constraint(equalTo: self.descriptionLabel.topAnchor, constant: -16),
 
-            self.descriptionLabel.topAnchor.constraint(equalTo: self.postImageView.bottomAnchor, constant: 16),
+
             self.descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             self.descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.descriptionLabel.bottomAnchor.constraint(equalTo: self.likesLabel.topAnchor, constant: -16),
 
-            self.likesLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
             self.descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             self.likesLabel.trailingAnchor.constraint(equalTo: self.viewsLabel.leadingAnchor),
             self.likesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),

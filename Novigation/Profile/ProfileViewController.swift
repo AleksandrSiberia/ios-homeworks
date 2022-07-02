@@ -25,13 +25,14 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(tableView)
-        setupConstraints()
+        self.setupConstraints()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
     }
+
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -41,9 +42,8 @@ final class ProfileViewController: UIViewController {
         self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
-
-
 }
+
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource  {
 
@@ -86,8 +86,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             let photosViewController = PhotosViewController()
-       //     let navPhotosViewController = UINavigationController(rootViewController: PhotosViewController())
-
             photosViewController.navigationItem.title = "Photos Gallery"
 
 

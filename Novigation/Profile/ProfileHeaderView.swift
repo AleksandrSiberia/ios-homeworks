@@ -9,6 +9,12 @@ import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
+    private lazy var startAvatarPosition: CGPoint = {
+        var startAvatarPosition = CGPoint()
+        return startAvatarPosition
+    }()
+
+
     private lazy var avatarImageView: UIImageView = {
         var avatarImageView = UIImageView()
         avatarImageView.backgroundColor = .systemGray4
@@ -18,6 +24,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarImageView.image = UIImage(named: "avatar")
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.borderWidth = 1
+        avatarImageView.isUserInteractionEnabled = true
         return avatarImageView
     }()
 
@@ -77,10 +84,32 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return ""
     }()
 
+    private var viewForAnimation: UIView = {
+        var viewForAnimation = UIView()
+        viewForAnimation.translatesAutoresizingMaskIntoConstraints = false
+        viewForAnimation.isHidden = true
+        viewForAnimation.layer.opacity = 0.5
+        return viewForAnimation
+    }()
+
+    private var buttonOffAnimation: UIButton = {
+        var buttonOffAnimation = UIButton()
+        buttonOffAnimation.translatesAutoresizingMaskIntoConstraints = false
+        buttonOffAnimation.isHidden = true
+        buttonOffAnimation.setImage(UIImage(named: "k"), for: .normal)
+        buttonOffAnimation.layer.cornerRadius = 20
+        buttonOffAnimation.layer.opacity = 0.5
+        buttonOffAnimation.layer.masksToBounds = true
+        buttonOffAnimation.addTarget(self, action: #selector(buttonOffAnimationTarget), for: .touchUpInside)
+        return buttonOffAnimation
+    }()
+
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.setupView()
+        self.setupConstraints()
+        self.setupGesture()
     }
 
     required init?(coder: NSCoder) {
@@ -91,24 +120,30 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
-    }
+            }
+
+
+    private func setupGesture() {
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        tapGestureRecognizer.addTarget(self, action: #selector(handleTapGestureRecognizer(_:)))
+        self.avatarImageView.addGestureRecognizer(tapGestureRecognizer) }
 
     func setFirtResponder() {
         self.statusTextField.becomeFirstResponder()
     }
 
     private func setupView() {
-        self.addSubview(self.avatarImageView)
-        self.addSubview(self.topStack)
         self.topStack.addArrangedSubview(self.fullNameLabel)
         self.topStack.addArrangedSubview(self.statusLabel)
-        self.addSubview(self.statusTextField)
-        self.addSubview(self.setStatusButton)
-        setupConstraints()
 
+        [topStack, statusTextField, setStatusButton,viewForAnimation, buttonOffAnimation, avatarImageView].forEach({self.addSubview($0)})
     }
 
+
     private func setupConstraints() {
+
+        let profileViewController = ProfileViewController()
+
         NSLayoutConstraint.activate([
         self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
         self.avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
@@ -129,10 +164,44 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
         self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
         self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-        self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+        self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+
+        self.viewForAnimation.widthAnchor.constraint(equalToConstant: profileViewController.view.frame.width),
+        self.viewForAnimation.heightAnchor.constraint(equalToConstant:  profileViewController.view.frame.height),
+
+        self.buttonOffAnimation.topAnchor.constraint(equalTo: self.viewForAnimation.topAnchor, constant: 14),
+        self.buttonOffAnimation.trailingAnchor.constraint(equalTo: self.viewForAnimation.trailingAnchor, constant: -14),
+        self.buttonOffAnimation.widthAnchor.constraint(equalToConstant: 40),
+        self.buttonOffAnimation.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 
+    private func basicAnimation() {
+        print(avatarImageView.frame)
+        startAvatarPosition = self.avatarImageView.center
+        let screenMain = UIScreen.main.bounds
+        let scale = UIScreen.main.bounds.width / avatarImageView.frame.width
+        self.avatarImageView.layer.masksToBounds = false
+        self.avatarImageView.layer.borderWidth = 0
+        self.viewForAnimation.isHidden = false
+        self.buttonOffAnimation.isHidden = false
+        print(scale)
+
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       options: .curveEaseInOut) {
+            self.avatarImageView.layer.cornerRadius = 0
+            self.avatarImageView.center = CGPoint(x: screenMain.width / 2.0, y: screenMain.height / 2.0)
+            self.avatarImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+            self.viewForAnimation.backgroundColor = .black
+
+        }
+    }
+
+   
+    @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
+        basicAnimation()
+    }
 
     @objc private func buttonPressed() {
         statusLabel.text = statusText
@@ -145,7 +214,26 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             statusText = text
         }
     }
+    @objc private func buttonOffAnimationTarget() {
+        print(#function)
 
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: .curveEaseInOut) {
+            self.avatarImageView.center = self.startAvatarPosition
+            self.avatarImageView.layer.cornerRadius =  50
+            self.avatarImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.viewForAnimation.backgroundColor = nil
+
+        }
+        completion: { _ in
+            self.avatarImageView.layer.borderWidth = 1
+            self.avatarImageView.layer.cornerRadius = 50
+            self.avatarImageView.layer.masksToBounds = true
+            self.viewForAnimation.isHidden = true
+            self.buttonOffAnimation.isHidden = true
+        }
+    }
 }
 
 extension ProfileHeaderView: UITextFieldDelegate {

@@ -34,13 +34,17 @@ class InfoViewController: UIViewController {
 
     @objc private func didTagButton() {
         let alertDelete = UIAlertController(title: "Удалить акаунт", message: "Вы хотите удалить аккаунт?", preferredStyle: .alert)
+
+
         let cancelAction = UIAlertAction(title: "Отмена",
                                          style: .cancel,
                                          handler: {_ in
             print("Cancel")
         })
-        
         alertDelete.addAction(cancelAction)
+
+
+
        let deleteAction = UIAlertAction(title: "Удалить",
                       style: .destructive,
                       handler: {_ in
@@ -48,6 +52,9 @@ class InfoViewController: UIViewController {
            print("Delete")
         })
         alertDelete.addAction(deleteAction)
+
+
+
         present(alertDelete, animated: true)
     }
 }

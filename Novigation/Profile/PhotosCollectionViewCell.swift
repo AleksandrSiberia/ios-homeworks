@@ -17,22 +17,27 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(imageView)
+
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setupConstraint()
     }
 
     private func setupConstraint() {
+
         NSLayoutConstraint.activate([
             self.imageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.imageView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            self.imageView.heightAnchor.constraint(equalTo: self.widthAnchor),
             self.imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
