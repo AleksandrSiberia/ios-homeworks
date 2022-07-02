@@ -16,8 +16,12 @@ class FeedViewController: UIViewController {
         postStack.axis = .vertical
         postStack.distribution = .fillEqually
         postStack.spacing = 10
-        postStack.backgroundColor = .systemBlue
         return postStack
+    }()
+
+    private lazy var buttonRightNavInfo: UIBarButtonItem = {
+        var buttonRightNavInfo = UIBarButtonItem(title: "Информация", style: .done, target: self, action: #selector(actionButtonRightNavInfo))
+        return buttonRightNavInfo
     }()
 
     private lazy var postButton: UIButton = {
@@ -51,11 +55,12 @@ class FeedViewController: UIViewController {
     }
 
     private func setupView() {
-        self.view.backgroundColor = .systemBlue
+        self.view.backgroundColor = .white
         self.navigationItem.title = "Лента"
         self.view.addSubview(postStack)
         self.postStack.addArrangedSubview(postButton)
         self.postStack.addArrangedSubview(postButton2)
+        self.navigationItem.rightBarButtonItem = buttonRightNavInfo
 
 
         NSLayoutConstraint.activate([
@@ -83,5 +88,11 @@ class FeedViewController: UIViewController {
             postViewController.post = Post(title: title)
         }
     }
+
+    @objc private func actionButtonRightNavInfo() {
+        let navInfoViewController = UINavigationController(rootViewController: InfoViewController())
+        present(navInfoViewController, animated: true, completion: nil)
+    }
+
 }
 

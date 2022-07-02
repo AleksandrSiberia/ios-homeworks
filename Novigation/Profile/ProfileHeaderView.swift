@@ -169,9 +169,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.viewForAnimation.widthAnchor.constraint(equalToConstant: profileViewController.view.frame.width),
         self.viewForAnimation.heightAnchor.constraint(equalToConstant:  profileViewController.view.frame.height),
 
-//        self.viewForAnimation.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-//        self.viewForAnimation.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
-
         self.buttonOffAnimation.topAnchor.constraint(equalTo: self.viewForAnimation.topAnchor, constant: 14),
         self.buttonOffAnimation.trailingAnchor.constraint(equalTo: self.viewForAnimation.trailingAnchor, constant: -14),
         self.buttonOffAnimation.widthAnchor.constraint(equalToConstant: 40),

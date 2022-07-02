@@ -63,11 +63,6 @@ class PhotosTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-    }
-
 
     private func setupConstraints() {
         let sectionInsetLR = collectionFlowLayout.sectionInset.left + collectionFlowLayout.sectionInset.right

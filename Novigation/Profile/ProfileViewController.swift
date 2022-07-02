@@ -33,15 +33,6 @@ final class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-  //      self.setupGesture()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -51,9 +42,6 @@ final class ProfileViewController: UIViewController {
         self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
-
-    @objc private func handleTapGestureRecognizer(_ gesture: UITapGestureRecognizer) {
-            }
 }
 
 
